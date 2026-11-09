@@ -1,4 +1,4 @@
-PRÉPA SEMI NANCY — version autonome
+fePRÉPA SEMI NANCY — version autonome
 ===================================
 
 Cette appli est un simple site statique (index.html + quelques fichiers).

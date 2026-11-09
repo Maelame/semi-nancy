@@ -1,0 +1,31 @@
+PRÉPA SEMI NANCY — version autonome
+===================================
+
+Cette appli est un simple site statique (index.html + quelques fichiers).
+Elle ne dépend d'aucun compte ni d'aucun service : une fois publiée, elle
+fonctionne même hors ligne. Ta progression reste sur ton téléphone.
+
+PUBLIER GRATUITEMENT (GitHub Pages, ~5 min, plus simple depuis un ordinateur)
+1. Crée un compte sur github.com (gratuit).
+2. Nouveau dépôt (New repository) : nom "semi-nancy", visibilité Public. Valide.
+3. "uploading an existing file" : glisse TOUS les fichiers de ce dossier
+   (index.html, manifest.webmanifest, sw.js, les 3 icônes png), puis "Commit changes".
+4. Settings > Pages > Source : "Deploy from a branch", branche "main", dossier "/ (root)" > Save.
+5. Après 1 à 2 minutes, ton adresse est :  https://TON-PSEUDO.github.io/semi-nancy/
+
+Le dépôt étant public, le plan est lisible par tout le monde. Ta progression, elle, n'est
+jamais envoyée nulle part.
+
+METTRE L'ICÔNE SUR LE TÉLÉPHONE
+- iPhone : ouvre l'adresse dans Safari > Partager > "Sur l'écran d'accueil".
+- Android : Chrome > menu ⋮ > "Installer l'application".
+Ouvre ensuite l'appli par l'icône et coche tes séances à partir de là.
+
+SAUVEGARDE
+Guide > Sauvegarde > "Copier ma sauvegarde", puis colle le texte dans une note.
+Pour restaurer (nouveau téléphone, données effacées) : Guide > Restaurer > colle > Importer.
+
+MODIFIER L'APPLI PLUS TARD
+Si tu changes un fichier, augmente le numéro dans sw.js (const CACHE = 'prepa-semi-v2')
+pour que les téléphones récupèrent la nouvelle version. La date du semi se corrige dans
+index.html (RACE_IDX et START en haut du script).

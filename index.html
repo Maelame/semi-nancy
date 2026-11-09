@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prépa semi Nancy</title>
+<meta name="description" content="Plan de 19 semaines pour le semi-marathon de Nancy : séance du jour, suivi et guide. Progression enregistrée sur le téléphone.">
+<meta name="theme-color" content="#EEF1F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0C1117" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Semi Nancy">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one column, bottom tab bar. A race bib carries the week number; paces and sets are set in mono. */
+:root{
+  --bg:#EEF1F4; --surface:#FFFFFF; --surface-2:#E7EBEF;
+  --ink:#11161C; --muted:#566270; --line:#D5DBE1; --line-strong:#AEB8C2;
+  --accent:#1E4FD6; --on-accent:#FFFFFF; --accent-soft:#DCE6FF;
+  --good:#1B7646; --good-soft:#DDF1E5; --warn:#8F5600; --warn-soft:#FBEBCF; --crit:#B3261E; --crit-soft:#FBE0DD;
+  --bar:#8C99A6; --bib-bg:#FFFFFF; --bib-fg:#11161C;
+  --f-display:'Big Shoulders Display','Oswald','Arial Narrow',sans-serif;
+  --f-body:'Public Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0C1117; --surface:#141B23; --surface-2:#1B242E;
+    --ink:#E7ECF1; --muted:#93A0AE; --line:#26313C; --line-strong:#3E4B58;
+    --accent:#7C9CFF; --on-accent:#0C1117; --accent-soft:#1B2A52;
+    --good:#5BC48D; --good-soft:#12301F; --warn:#E3A24B; --warn-soft:#33250D; --crit:#F2827A; --crit-soft:#391917;
+    --bar:#6B7886; --bib-bg:#F1F4F7; --bib-fg:#0C1117; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0C1117; --surface:#141B23; --surface-2:#1B242E;
+  --ink:#E7ECF1; --muted:#93A0AE; --line:#26313C; --line-strong:#3E4B58;
+  --accent:#7C9CFF; --on-accent:#0C1117; --accent-soft:#1B2A52;
+  --good:#5BC48D; --good-soft:#12301F; --warn:#E3A24B; --warn-soft:#33250D; --crit:#F2827A; --crit-soft:#391917;
+  --bar:#6B7886; --bib-bg:#F1F4F7; --bib-fg:#0C1117; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 var(--f-body);-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
+button:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:560px;margin:0 auto;padding-top:calc(20px + env(safe-area-inset-top,0px));padding-bottom:calc(104px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{font:500 12px/1.3 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+/* header */
+.hd{display:flex;gap:16px;align-items:center}
+.bib{position:relative;flex:none;width:96px;height:88px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bib-bg);color:var(--bib-fg);border:2px solid var(--bib-fg);border-radius:3px}
+.bib::before,.bib::after{content:"";position:absolute;top:6px;width:7px;height:7px;border:1.5px solid var(--bib-fg);border-radius:50%}
+.bib::before{left:7px}.bib::after{right:7px}
+.bib-n{font:800 54px/1 var(--f-display);margin-top:8px}
+.bib-of{font:500 10px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;margin-top:2px}
+.hd-info{min-width:0}
+.hd-dates{font:700 34px/1 var(--f-display);letter-spacing:.01em;margin:5px 0 8px}
+.hd-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font:400 13px/1.3 var(--f-mono);color:var(--muted)}
+.pips{display:inline-flex;gap:3px}
+.pip{width:10px;height:10px;border:1.5px solid var(--line-strong)}
+.pip.on{background:var(--good);border-color:var(--good)}
+.count{margin:16px 0 0;padding-top:12px;border-top:1px solid var(--line);font:400 13px/1.45 var(--f-mono);color:var(--muted)}
+.count b{color:var(--ink);font-weight:500}
+
+/* cards */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:18px 16px;margin-top:16px}
+.card-hd{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.chip{font:500 11px/1 var(--f-mono);text-transform:uppercase;letter-spacing:.06em;padding:5px 7px;border:1px solid var(--line-strong);border-radius:2px;color:var(--muted);white-space:nowrap}
+.chip.acc{border-color:var(--accent);color:var(--accent)}
+.title{font:700 36px/1.02 var(--f-display);letter-spacing:.005em;margin:12px 0 4px;text-wrap:balance}
+.detail{font:500 17px/1.5 var(--f-mono);margin:8px 0 0;overflow-wrap:anywhere}
+.hint{margin:10px 0 0;font-size:14px;color:var(--muted)}
+.note{margin:12px 0 0;padding:10px 12px;background:var(--surface-2);font-size:14px;border-radius:2px}
+.sets{list-style:none;margin:12px 0 0;padding:0}
+.sets li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-top:1px solid var(--line);font-size:15px}
+.sets li span:last-child{font:500 14px/1.5 var(--f-mono);white-space:nowrap;text-align:right}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:50px;margin-top:16px;padding:10px 14px;border:1px solid var(--accent);background:var(--accent);color:var(--on-accent);font-weight:600;border-radius:3px}
+.btn.is-done{background:transparent;color:var(--good);border-color:var(--good)}
+.btn small{font-weight:400;opacity:.85}
+.link{background:none;border:0;padding:0;color:var(--accent);font-size:14px;text-decoration:underline;text-underline-offset:3px}
+.back{margin:14px 0 0}
+
+/* pain */
+.pain{margin-top:18px}
+.pain-q{font-weight:600;font-size:14px;margin-bottom:8px}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.seg button{min-height:46px;padding:6px 4px;border:1px solid var(--line-strong);background:var(--surface);border-radius:3px;font-size:14px;line-height:1.2}
+.seg button[aria-pressed="true"].ok{border-color:var(--good);background:var(--good-soft);color:var(--good);font-weight:600}
+.seg button[aria-pressed="true"].leger{border-color:var(--warn);background:var(--warn-soft);color:var(--warn);font-weight:600}
+.seg button[aria-pressed="true"].stop{border-color:var(--crit);background:var(--crit-soft);color:var(--crit);font-weight:600}
+.alert{margin-top:12px;padding:12px 14px;border:1px solid;border-radius:3px;font-size:14px}
+.alert.warn{background:var(--warn-soft);border-color:var(--warn)}
+.alert.crit{background:var(--crit-soft);border-color:var(--crit)}
+.alert.ok{background:var(--good-soft);border-color:var(--good)}
+.alert b{display:block;margin-bottom:2px}
+.steps{margin:10px 0 0;padding-left:20px;font-size:15px}
+.steps li{padding:2px 0}
+
+/* renfo */
+details.renfo{margin-top:14px;border-top:1px solid var(--line);padding-top:10px;font-size:14px}
+details.renfo summary{cursor:pointer;font-weight:600}
+details.renfo ul{margin:8px 0 0;padding-left:18px;color:var(--muted)}
+
+/* days list */
+.sec-hd{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:30px 0 4px}
+.h2{margin:0;font:700 26px/1.1 var(--f-display);letter-spacing:.01em}
+.day{display:grid;grid-template-columns:44px 1fr 22px;gap:10px;align-items:center;width:100%;min-height:58px;padding:11px 8px;margin:0;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);color:inherit}
+.day.sel{background:var(--accent-soft)}
+.dn{font:500 12px/1.2 var(--f-mono);text-transform:uppercase;color:var(--muted)}
+.day.tod .dn{color:var(--accent);font-weight:600}
+.dt{display:block;font-weight:600;font-size:15px;line-height:1.3}
+.ds{display:block;font:400 13px/1.4 var(--f-mono);color:var(--muted);overflow-wrap:anywhere}
+.mk{width:22px;height:22px;flex:none}
+.mk.todo circle{fill:none;stroke:var(--line-strong);stroke-width:1.5}
+.mk.done circle{fill:var(--good)}
+.mk.done path{fill:none;stroke:var(--surface);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.mk.rest path{fill:none;stroke:var(--line-strong);stroke-width:2;stroke-linecap:round}
+
+/* weeks */
+.chart{margin-top:16px}
+.chart svg{display:block;width:100%;height:auto;margin-top:10px}
+.gl{stroke:var(--line);stroke-width:1}
+.ax{fill:var(--muted);font:9px var(--f-mono)}
+.xl{fill:var(--muted);font:9px var(--f-mono)}
+.xl.cur{fill:var(--accent);font-weight:500}
+.vl{fill:var(--ink);font:500 10px var(--f-mono)}
+.bar{fill:var(--bar)}
+.bar.fut{opacity:.55}
+.bar.hol{fill:var(--surface);stroke:var(--bar);stroke-width:1.5}
+.bar.cur{fill:var(--accent);stroke:none;opacity:1}
+.cap{margin:8px 0 0;font-size:13px;color:var(--muted)}
+.ph{margin:30px 0 6px}
+.ph p{margin:4px 0 0;font-size:14px;color:var(--muted)}
+.wk{border-bottom:1px solid var(--line)}
+.wk>summary{display:grid;grid-template-columns:50px 1fr auto 14px;gap:10px;align-items:center;min-height:58px;padding:10px 0;list-style:none;cursor:pointer}
+.wk>summary::-webkit-details-marker{display:none}
+.wk>summary::after{content:"";width:7px;height:7px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:rotate(45deg);justify-self:end;margin-top:-3px}
+.wk[open]>summary::after{transform:rotate(-135deg);margin-top:3px}
+.sn{font:700 30px/1 var(--f-display)}
+.wk.cur .sn{color:var(--accent)}
+.wk-d{display:block;font-weight:600;font-size:15px}
+.wk-k{display:block;font:400 13px/1.4 var(--f-mono);color:var(--muted)}
+
+/* guide */
+.g p{margin:8px 0;font-size:15px}
+.g ul{margin:8px 0;padding-left:20px;font-size:15px}
+.g li{padding:2px 0}
+.pace{margin:8px 0 0}
+.pace div{padding:11px 0;border-top:1px solid var(--line)}
+.pace dt{font-weight:600;font-size:15px}
+.pace dd{margin:2px 0 0;font-size:14px;color:var(--muted)}
+.pace dd b{font:500 14px var(--f-mono);color:var(--ink)}
+.rule{padding:12px 0;border-top:1px solid var(--line);font-size:15px}
+.rule b{display:block}
+.rule span{color:var(--muted);font-size:14px}
+.foot{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.foot a{color:var(--accent)}
+
+/* sauvegarde */
+.row{display:flex;gap:8px;margin-top:12px}
+.btn2{flex:1;min-height:46px;padding:8px 10px;border:1px solid var(--line-strong);background:var(--surface);border-radius:3px;font-weight:600;font-size:15px}
+.btn2.pri{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.ta{display:block;width:100%;min-height:130px;margin-top:12px;padding:10px;font:400 16px/1.4 var(--f-mono);color:var(--ink);background:var(--surface);border:1px solid var(--line-strong);border-radius:3px;resize:vertical}
+
+/* tabs */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;justify-content:center;background:var(--surface);border-top:1px solid var(--line);padding:0 max(16px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(16px,env(safe-area-inset-left,0px))}
+.tabs-in{display:flex;width:100%;max-width:560px}
+.tabs button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;min-height:58px;padding:9px 4px 8px;background:none;border:0;color:var(--muted);font-size:12px;font-weight:500}
+.tabs button[aria-current="page"]{color:var(--accent)}
+.tabs svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<noscript><p style="padding:16px;font:16px system-ui">Cette appli a besoin de JavaScript.</p></noscript>
+<div class="wrap" id="view"></div>
+<nav class="tabs" aria-label="Navigation">
+  <div class="tabs-in">
+    <button type="button" data-tab="today"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg><span>Aujourd'hui</span></button>
+    <button type="button" data-tab="weeks"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20v-6M10 20V8M15 20v-9M20 20V4"/></svg><span>Semaines</span></button>
+    <button type="button" data-tab="guide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4z"/><path d="M8 17h10"/></svg><span>Guide</span></button>
+  </div>
+</nav>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- calendrier ---------- */
+var START=Date.UTC(2026,10,9);            // lundi 9 novembre 2026 = S1, lundi
+var RACE_IDX=132;                          // dimanche 21 mars 2027 (date à confirmer)
+var DAYS=['lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche'];
+var DAYS_S=['Lun.','Mar.','Mer.','Jeu.','Ven.','Sam.','Dim.'];
+var MONTHS=['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+function dOf(idx){var d=new Date(START+idx*86400000);return {d:d.getUTCDate(),m:d.getUTCMonth()};}
+function fmt(idx){var x=dOf(idx);return x.d+' '+MONTHS[x.m];}
+function fmtRange(n){var a=dOf((n-1)*7),b=dOf((n-1)*7+6);return a.m===b.m?a.d+'–'+b.d+' '+MONTHS[a.m]:a.d+' '+MONTHS[a.m]+' – '+b.d+' '+MONTHS[b.m];}
+function todayIdx(){var t=new Date();return Math.round((Date.UTC(t.getFullYear(),t.getMonth(),t.getDate())-START)/86400000);}
+function nowInfo(){var i=todayIdx();if(i<0)return {idx:i,n:1,dow:0,ph:'pre'};if(i>RACE_IDX)return {idx:i,n:19,dow:6,ph:'post'};return {idx:i,n:Math.floor(i/7)+1,dow:i%7,ph:'in'};}
+
+/* ---------- données du plan ---------- */
+var E=function(d,k){return {title:'Footing facile',d:d,k:k||['easy']};};
+var RW=function(d,t){return {title:t||'Course / marche',d:d,k:['rw']};};
+var L=function(d,k){return {title:'Sortie longue',d:d,k:k||['easy']};};
+var Q=function(t,d,k){return {title:t,d:d,k:[k]};};
+var W=[
+ {km:8, t:[RW("8×(2' course + 1' marche)"),RW("8×(2' course + 1' marche)"),RW("8×(2' course + 1' marche)",'Sortie longue')]},
+ {km:10,t:[RW("7×(3' course + 1' marche)"),RW("7×(3' course + 1' marche)"),RW("8×(3' course + 1' marche)",'Sortie longue')]},
+ {km:12,t:[RW("5×(5' course + 1' marche)"),RW("5×(5' course + 1' marche)"),RW("6×(5' course + 1' marche)",'Sortie longue')]},
+ {km:10,t:[E("20' continu, facile"),E("20' continu, facile"),RW("5×(5' course + 1' marche)",'Sortie longue')]},
+ {km:14,t:[E("25' continu"),E("25' continu"),L("40' continu")]},
+ {km:16,t:[E("30' facile + 4 lignes droites",['easy','strides']),E("30' facile"),L("50' facile (≈ 7 km)")]},
+ {km:18,t:[E("35' facile + 6 lignes droites",['easy','strides']),E("30' facile"),L("55' facile (≈ 8 km)")]},
+ {km:15,t:[E("30' facile"),E("30' facile"),L("45' facile")]},
+ {km:20,t:[Q('Fartlek',`10' échauffement · 6×(1' soutenu + 1'30" trot) · 10' retour`,'fartlek'),E("35' facile"),L("9 km facile")]},
+ {km:22,t:[Q('Séance seuil',`10' échauffement · 4×5' seuil (2' trot) · 10' retour`,'seuil'),E("35' facile"),L("10 km facile")]},
+ {km:24,t:[Q('Séance seuil',`10' échauffement · 3×8' seuil (2'30" trot) · 10' retour`,'seuil'),E("5 km facile"),L("11 km facile")]},
+ {km:21,t:[Q('Test 5 km',`10' échauffement · 5 km à fond contrôlé · 10' retour`,'test'),E("5 km facile"),L("8 km facile")]},
+ {km:26,t:[Q('Séance seuil',`10' échauffement · 2×15' seuil (3' trot) · 10' retour`,'seuil'),E("5 km facile"),L("12 km facile")]},
+ {km:29,t:[Q('Séance seuil',`10' échauffement · 3×10' seuil (2'30" trot) · 10' retour`,'seuil'),E("6 km facile"),L("14 km facile")]},
+ {km:32,t:[Q('Allure semi',`10' échauffement · 3×12' allure semi (3' trot) · 10' retour`,'semi'),E("5 km facile"),L("16 km, les 3 derniers à allure semi",['easy','semi'])]},
+ {km:25,t:[Q('Allure semi',`10' échauffement · 2×12' allure semi (3' trot) · 10' retour`,'semi'),E("5 km facile"),L("12 km facile")]},
+ {km:34,t:[Q('Allure semi',`10' échauffement · 2×20' allure semi (3' trot) · 10' retour`,'semi'),E("6 km facile"),L("17 km dont 2×4 km à allure semi",['easy','semi'])]},
+ {km:24,t:[Q('Allure semi',`10' échauffement · 3×8' allure semi (2' trot) · 10' retour`,'semi'),E("5 km facile"),L("11 km facile")]},
+ {km:13,t:[Q('Allure semi',`10' échauffement · 4×2' allure semi (2' trot) · 10' retour`,'semi'),E("4 km facile + 4 lignes droites",['easy','strides']),{title:'Semi de Nancy',d:"21,1 km · départ à 10 h (date à confirmer)",k:['race']}],
+  sat:{title:'Footing de veille',d:"20' facile + 3 lignes droites",k:['easy','strides']}}
+];
+var PHASES=[
+ {name:'Reprise',a:1,b:5,d:"Habituer le tibia à la charge. Tout est facile."},
+ {name:'Construction',a:6,b:13,d:"Sortie longue de 7 à 12 km, une séance de qualité par semaine."},
+ {name:'Spécifique',a:14,b:17,d:"Allure semi, sortie longue jusqu'à 17 km."},
+ {name:'Affûtage',a:18,b:19,d:"On garde l'intensité, on coupe le volume."}
+];
+var TAG={4:'Allègement',8:'Allègement',12:'Allègement · test',16:'Allègement',17:'Pic',19:'Semaine de course'};
+var DELOAD=[4,8,12,16];
+function phaseOf(n){return n<=5?'Reprise':n<=13?'Construction':n<=17?'Spécifique':'Affûtage';}
+
+var MU={
+ A:{title:'Haut du corps A',renfo:true,items:[['Développé couché','4×6–8'],['Tractions lestées','4×6–8'],['Développé militaire','3×8–10'],['Rowing buste penché','3×8–10'],['Triceps','3×10–12']]},
+ BAS:{title:'Bas du corps',tag:'Entretien',items:[['Squat ou presse','3×5'],['Soulevé de terre roumain','3×6–8'],['Fentes bulgares','2×8 / jambe'],['Mollets debout, lents','3×12'],['Soléaire assis','2×15'],['Relevés de pointes de pied, contre un mur','3×15–20']]},
+ B:{title:'Haut du corps B',renfo:true,items:[['Développé incliné haltères','4×8–10'],['Tirage horizontal','4×8–10'],['Élévations latérales','3×12–15'],['Face pull','3×12–15'],['Curl','3×10–12']]},
+ C:{title:'Haut du corps C',tag:'Optionnel',items:[['Dips lestés','3×8–10'],['Tractions prise neutre','3×8–10'],['Développé épaules haltères','3×10'],['Bras en superset','3 tours'],['Gainage','10 min']]}
+};
+var RENFO=[['Relevés de pointes de pied','3×20'],['Descentes lentes sur pointes','3×12'],['Soléaire assis','3×15'],['Pas latéraux avec élastique','2×15']];
+
+function muscuPlan(id,key,n){
+  var m=MU[key],notes=[];
+  if(key==='BAS'){
+    if(n<=5)notes.push("2 séries au lieu de 3, charges réduites d'environ 20 %.");
+    if(n>=9&&n<=17)notes.push("Corde à sauter 3×1' en fin de séance, si le tibia est silencieux.");
+    if(n===18)notes.push("2 séries légères.");
+    notes.push("Jamais à l'échec.");
+  }else if(n===19){notes.push("30 % de séries en moins cette semaine.");}
+  return {id:id,type:'muscu',title:m.title,tag:m.tag,items:m.items,notes:notes,renfo:!!m.renfo};
+}
+function plan(n,dow){
+  var w=W[n-1],id='S'+n+'-'+dow;
+  if(dow===0)return muscuPlan(id,'A',n);
+  if(dow===2)return n===19?{id:id,type:'rest',title:'Pas de jambes',d:"Semaine de course : marche ou mobilité si tu veux."}:muscuPlan(id,'BAS',n);
+  if(dow===4)return muscuPlan(id,'B',n);
+  if(dow===1||dow===3||dow===6){var s=w.t[dow===1?0:dow===3?1:2];return {id:id,type:'run',title:s.title,d:s.d,k:s.k,pre:dow===3,race:s.k.indexOf('race')>=0};}
+  if(n===19)return {id:id,type:'run',title:w.sat.title,d:w.sat.d,k:w.sat.k};
+  var o=muscuPlan('S'+n+'-5c','C',n);
+  return {id:id,type:'rest',title:'Repos',d:"Un jour sans séance pour arriver frais à la sortie longue.",opt:o};
+}
+function required(n){var r=[];for(var d=0;d<7;d++){var p=plan(n,d);if(p.type!=='rest')r.push(p.id);}return r;}
+
+function hintFor(k,n){
+  switch(k){
+    case 'rw':return "Marche dès que le tibia ou le souffle tire. Aucune allure à tenir.";
+    case 'easy':return "Facile : tu parles en phrases complètes, environ 6'20–7'15 /km.";
+    case 'strides':return "Lignes droites : 20 s vifs et relâchés, puis 40 s de trot.";
+    case 'fartlek':return "Soutenu = 7/10, phrases de 3–4 mots.";
+    case 'seuil':return n<=12?"Seuil : soutenu mais contrôlé, environ 5'20–5'40 /km.":"Seuil : environ 10 s/km plus vite que ton allure semi cible.";
+    case 'semi':return "Allure semi : 4'58 /km pour passer sous 1h45, 5'13–5'27 /km pour 1h50–1h55.";
+    case 'test':return "À fond mais contrôlé. 23'00 ou moins : tu gardes la cible 1h45.";
+    case 'race':return "Pars à l'allure cible, sans accélérer sur les 5 premiers km.";
+  }
+  return '';
+}
+function runChip(p){
+  if(p.k.indexOf('race')>=0)return ['Course',1];
+  if(p.title==='Sortie longue')return ['Longue',0];
+  if(p.k.indexOf('test')>=0)return ['Test',1];
+  if(p.k.some(function(x){return x==='fartlek'||x==='seuil'||x==='semi';}))return ['Qualité',1];
+  if(p.k.indexOf('rw')>=0)return ['Course / marche',0];
+  return ['Facile',0];
+}
+
+/* ---------- état et sauvegarde ---------- */
+var KEY='prepa-semi-nancy-v1';
+function norm(r){r=r||{};return {done:Object.assign({},r.done),pain:Object.assign({},r.pain),entry:!!r.entry};}
+function clone(o){return JSON.parse(JSON.stringify(o));}
+function deep(a,b){for(var k in b){if(b[k]&&typeof b[k]==='object')a[k]=deep(a[k]&&typeof a[k]==='object'?a[k]:{},b[k]);else a[k]=b[k];}return a;}
+function hasData(s){return !!(Object.keys(s.done).length||Object.keys(s.pain).length||s.entry);}
+var state=(function(){try{var r=JSON.parse(localStorage.getItem(KEY)||'null');if(r&&typeof r==='object')return norm(r);}catch(e){}return norm({});})();
+function mirror(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+var tab='today',sel=null,openWeeks=new Set(),openInit=false;
+var io={mode:'',msg:'',kind:''};
+var STANDALONE=(function(){try{return !!(window.navigator.standalone||(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches));}catch(e){return false;}})();
+
+function change(patch){deep(state,patch);mirror();render();}
+window.addEventListener('storage',function(e){
+  if(e.key!==KEY)return;
+  try{state=norm(JSON.parse(e.newValue||'null'));render();}catch(err){}
+});
+
+/* sauvegarde par texte : copier / coller, sans fichier ni compte */
+function backupText(){
+  var done={},pain={};
+  Object.keys(state.done).forEach(function(k){if(state.done[k])done[k]=true;});
+  Object.keys(state.pain).forEach(function(k){if(state.pain[k])pain[k]=state.pain[k];});
+  return JSON.stringify({app:'prepa-semi-nancy',v:1,saved:new Date().toISOString(),done:done,pain:pain,entry:!!state.entry});
+}
+function parseBackup(txt){
+  var o;
+  try{o=JSON.parse(String(txt||'').trim());}catch(e){return {err:"Ce texte n'est pas une sauvegarde valide. Colle-le en entier, de { jusqu'à }."};}
+  if(!o||o.app!=='prepa-semi-nancy'||typeof o.done!=='object'||!o.done)return {err:"Ce texte ne vient pas de cette appli."};
+  var done={},pain={},n=0,k;
+  for(k in o.done){if(o.done[k]===true&&/^S([1-9]|1[0-9])-([0-6]|5c)$/.test(k)){done[k]=true;n++;}}
+  for(k in (o.pain||{})){if(/^S([1-9]|1[0-9])-[0-6]$/.test(k)&&(o.pain[k]==='ok'||o.pain[k]==='leger'||o.pain[k]==='stop'))pain[k]=o.pain[k];}
+  return {state:{done:done,pain:pain,entry:o.entry===true},n:n};
+}
+function copyText(t){
+  try{if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(t).then(function(){return true;},function(){return false;});}catch(e){}
+  return Promise.resolve(false);
+}
+function backupSection(){
+  var h='<div class="sec-hd"><h2 class="h2">Sauvegarde</h2></div>'
+   +'<p>Ta progression est enregistrée sur ce téléphone, sans compte ni serveur. Si tu changes de téléphone ou si tu effaces les données du navigateur, elle disparaît : fais une sauvegarde de temps en temps et garde-la dans une note.</p>'
+   +'<div class="row"><button type="button" class="btn2" data-act="bk-copy" data-fk="bk-copy">Copier ma sauvegarde</button><button type="button" class="btn2" data-act="bk-open" data-fk="bk-open">Restaurer</button></div>';
+  if(io.mode==='export')h+='<textarea class="ta" readonly rows="6" data-act="bk-select" aria-label="Texte de la sauvegarde">'+esc(backupText())+'</textarea>';
+  if(io.mode==='import')h+='<p class="hint">Colle ta sauvegarde ci-dessous. Elle remplace la progression actuelle.</p><textarea class="ta" id="bk-ta" rows="6" aria-label="Coller la sauvegarde" autocapitalize="off" autocomplete="off" spellcheck="false"></textarea>'
+    +'<div class="row"><button type="button" class="btn2 pri" data-act="bk-import">Importer</button><button type="button" class="btn2" data-act="bk-close">Annuler</button></div>';
+  if(io.msg)h+='<div class="alert '+(io.kind||'ok')+'">'+esc(io.msg)+'</div>';
+  return h;
+}
+function installSection(){
+  if(STANDALONE)return '';
+  return '<div class="sec-hd"><h2 class="h2">Mettre l\'icône sur le téléphone</h2></div>'
+   +'<ul><li><b>iPhone</b> : ouvre cette page dans Safari, touche Partager, puis « Sur l\'écran d\'accueil ».</li>'
+   +'<li><b>Android</b> : dans Chrome, menu ⋮, puis « Installer l\'application » ou « Ajouter à l\'écran d\'accueil ».</li></ul>'
+   +'<p>Une fois l\'icône créée, ouvre toujours l\'appli par l\'icône et commence à cocher tes séances à partir de là : la progression de l\'icône est séparée de celle du navigateur.</p>';
+}
+
+/* ---------- rendu ---------- */
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function mk(st){
+  if(st==='done')return '<svg class="mk done" viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="10"/><path d="M6.5 11.4l3.2 3.2 5.8-6.4"/></svg>';
+  if(st==='rest')return '<svg class="mk rest" viewBox="0 0 22 22" aria-hidden="true"><path d="M6 11h10"/></svg>';
+  return '<svg class="mk todo" viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="10"/></svg>';
+}
+function isDone(p){return p.type==='rest'?(p.opt?!!state.done[p.opt.id]:null):!!state.done[p.id];}
+function chips(list){return '<div class="chips">'+list.map(function(c){return '<span class="chip'+(c[1]?' acc':'')+'">'+esc(c[0])+'</span>';}).join('')+'</div>';}
+
+function doneBtn(id,doneNow,label){
+  return '<button type="button" class="btn'+(doneNow?' is-done':'')+'" data-act="done" data-id="'+id+'" data-fk="done-'+id+'" aria-pressed="'+(doneNow?'true':'false')+'">'
+    +(doneNow?mk('done')+'<span>Faite <small>· toucher pour annuler</small></span>':'<span>'+(label||'Marquer comme faite')+'</span>')+'</button>';
+}
+function painBlock(id){
+  var v=state.pain[id]||'';
+  var opts=[['ok','Aucune'],['leger','1–2 sur 10'],['stop','3 ou plus']];
+  var h='<div class="pain"><div class="pain-q" id="pq-'+id+'">Gêne au tibia pendant ou après ?</div><div class="seg" role="group" aria-labelledby="pq-'+id+'">';
+  opts.forEach(function(o){h+='<button type="button" class="'+o[0]+'" data-act="pain" data-id="'+id+'" data-v="'+o[0]+'" data-fk="pain-'+id+'-'+o[0]+'" aria-pressed="'+(v===o[0]?'true':'false')+'">'+o[1]+'</button>';});
+  h+='</div>';
+  if(v==='leger')h+='<div class="alert warn"><b>Acceptable si elle disparaît en 24 h.</b>En cas de doute, n\'augmente pas la semaine suivante.</div>';
+  if(v==='stop')h+='<div class="alert crit"><b>Arrête là pour aujourd\'hui.</b>Vélo 3 à 5 jours, puis reprise à la semaine précédente. Une douleur sur un point précis du tibia, à la marche, au repos ou la nuit : avis médical.</div>';
+  return h+'</div>';
+}
+function itemsList(items){return '<ul class="sets">'+items.map(function(i){return '<li><span>'+esc(i[0])+'</span><span>'+esc(i[1])+'</span></li>';}).join('')+'</ul>';}
+function renfoBlock(label){
+  return '<details class="renfo"><summary>'+esc(label)+'</summary><ul>'+RENFO.map(function(i){return '<li>'+esc(i[0])+' · '+esc(i[1])+'</li>';}).join('')+'</ul></details>';
+}
+
+function sessionCard(n,dow,now){
+  var p=plan(n,dow),idx=(n-1)*7+dow,rel=idx-now.idx;
+  var when=rel===0?"Aujourd'hui · ":rel===1?'Demain · ':rel===-1?'Hier · ':'';
+  var eyebrow=when+DAYS[dow]+' '+fmt(idx);
+  var h='<section class="card" aria-label="Séance du jour">';
+  if(p.type==='run'){
+    var c=runChip(p),shown={};
+    h+='<div class="card-hd"><span class="eyebrow">'+esc(eyebrow)+'</span>'+chips([c])+'</div>';
+    h+='<h1 class="title">'+esc(p.title)+'</h1><p class="detail">'+esc(p.d)+'</p>';
+    p.k.forEach(function(k){var t=hintFor(k,n);if(t&&!shown[t]){shown[t]=1;h+='<p class="hint">'+esc(t)+'</p>';}});
+    if(p.pre)h+='<div class="note">5 min de renfo tibia/mollets avant de partir. Détail dans le Guide.</div>';
+    h+=doneBtn(p.id,!!state.done[p.id],p.race?'Semi terminé':null);
+    if(state.done[p.id]&&!p.race)h+=painBlock(p.id);
+  }else if(p.type==='muscu'){
+    var cc=[['Muscu',0]];if(p.tag)cc.push([p.tag,0]);
+    h+='<div class="card-hd"><span class="eyebrow">'+esc(eyebrow)+'</span>'+chips(cc)+'</div>';
+    h+='<h1 class="title">'+esc(p.title)+'</h1>';
+    p.notes.forEach(function(t){h+='<div class="note">'+esc(t)+'</div>';});
+    h+=itemsList(p.items);
+    if(p.renfo)h+=renfoBlock('+ 10 min de renfo tibia/mollets en fin de séance');
+    h+=doneBtn(p.id,!!state.done[p.id]);
+  }else{
+    h+='<div class="card-hd"><span class="eyebrow">'+esc(eyebrow)+'</span>'+chips([['Repos',0]])+'</div>';
+    h+='<h1 class="title">'+esc(p.title)+'</h1><p class="hint">'+esc(p.d)+'</p>';
+    if(p.opt){
+      var o=p.opt;
+      h+='<div class="sec-hd" style="margin-top:22px"><h2 class="h2">Option : '+esc(o.title)+'</h2></div>';
+      h+='<p class="hint" style="margin-top:0">30 à 40 min, seulement si tu es en forme et si les jambes ne sont pas lourdes.</p>';
+      h+=itemsList(o.items)+doneBtn(o.id,!!state.done[o.id],'Marquer comme faite (optionnel)');
+    }
+  }
+  return h+'</section>';
+}
+
+function dayRow(n,dow,now,selected){
+  var p=plan(n,dow),d=isDone(p),sub,isT=now.ph==='in'&&now.n===n&&now.dow===dow;
+  var isS=selected&&selected.n===n&&selected.dow===dow;
+  if(p.type==='run')sub=p.d;
+  else if(p.type==='muscu')sub='Muscu · '+p.items.length+' exercices';
+  else sub=p.opt?'Option : '+p.opt.title:p.d;
+  var st=p.type==='rest'&&!d?'rest':d?'done':'todo';
+  return '<button type="button" class="day'+(isS?' sel':'')+(isT?' tod':'')+'" data-act="pick" data-n="'+n+'" data-d="'+dow+'" data-fk="day-'+n+'-'+dow+'"'+(isS?' aria-current="true"':'')+'>'
+    +'<span class="dn">'+DAYS_S[dow]+'</span><span><span class="dt">'+esc(p.title)+'</span><span class="ds">'+esc(sub)+'</span></span>'+mk(st)+'</button>';
+}
+function weekCount(n){var r=required(n),d=r.filter(function(i){return state.done[i];}).length;return {d:d,t:r.length};}
+
+function latestPain(){var best=null;for(var n=1;n<=19;n++)for(var d=0;d<7;d++){var v=state.pain['S'+n+'-'+d];if(v)best={n:n,d:d,v:v};}return best;}
+
+function renderToday(){
+  var now=nowInfo(),s=sel||{n:now.n,dow:now.dow},n=s.n,w=W[n-1],wc=weekCount(n);
+  var h='<header class="hd"><div class="bib" aria-label="Semaine '+n+' sur 19"><span class="bib-n">S'+n+'</span><span class="bib-of">sur 19</span></div>'
+    +'<div class="hd-info"><div class="eyebrow">'+phaseOf(n)+(TAG[n]?' · '+TAG[n]:'')+'</div><div class="hd-dates">'+fmtRange(n)+'</div>'
+    +'<div class="hd-meta"><span>'+w.km+' km'+(n===19?' + semi':'')+'</span><span class="pips" aria-hidden="true">';
+  for(var i=0;i<wc.t;i++)h+='<span class="pip'+(i<wc.d?' on':'')+'"></span>';
+  h+='</span><span>'+wc.d+'/'+wc.t+' séances</span></div></div></header>';
+  var left=RACE_IDX-now.idx;
+  h+='<p class="count">'+(now.ph==='pre'?'Le plan démarre <b>lundi 9 nov.</b> · ':'')
+    +(now.ph==='post'?'<b>Semi terminé.</b> Bravo.':left===0?'<b>Jour J.</b>':'Semi de Nancy dans <b>'+left+' jours</b> · mars 2027, date à confirmer')+'</p>';
+  var lp=latestPain();
+  if(lp&&lp.v==='stop')h+='<div class="alert crit"><b>Gêne à 3/10 ou plus notée '+DAYS[lp.d]+' '+fmt((lp.n-1)*7+lp.d)+'.</b>Vélo 3 à 5 jours, puis reprise à la semaine S'+Math.max(1,lp.n-1)+'. Douleur sur un point précis, à la marche, au repos ou la nuit : avis médical.</div>';
+  var entry='<section class="card"><div class="eyebrow">Avant S1</div><h2 class="h2" style="margin-top:8px">Test d\'entrée</h2>'
+    +'<ol class="steps"><li>Marche rapide 30 minutes.</li><li>20 sautillements sur chaque jambe.</li><li>Pression du pouce le long du tibia.</li></ol>'
+    +'<p class="hint">Zéro douleur : tu démarres. Gêne à 3/10 ou plus : tu ne démarres pas et tu revois ton kiné ou médecin du sport.</p>'
+    +'<button type="button" class="btn'+(state.entry?' is-done':'')+'" data-act="entry" data-fk="entry" aria-pressed="'+(state.entry?'true':'false')+'">'
+    +(state.entry?mk('done')+'<span>Test validé <small>· toucher pour annuler</small></span>':'<span>Test réussi, je démarre</span>')+'</button></section>';
+  var showEntry=!state.entry&&now.idx<7;
+  if(showEntry&&now.ph==='pre')h+=entry;
+  if(sel&&!(now.ph==='in'&&sel.n===now.n&&sel.dow===now.dow))h+='<p class="back"><button type="button" class="link" data-act="now" data-fk="now">Revenir à aujourd\'hui</button></p>';
+  h+=sessionCard(n,s.dow,now);
+  if(showEntry&&now.ph!=='pre')h+=entry;
+  h+='<div class="sec-hd"><h2 class="h2">Semaine '+n+'</h2><span class="eyebrow">'+fmtRange(n)+'</span></div><div>';
+  for(var d=0;d<7;d++)h+=dayRow(n,d,now,{n:n,dow:s.dow});
+  return h+'</div>';
+}
+
+function chartSvg(curN){
+  var VW=360,VH=172,Lm=28,Rm=8,T=22,B=24,pw=VW-Lm-Rm,ph=VH-T-B,max=40,slot=pw/19,bw=Math.min(12,slot*0.68);
+  var s='<svg viewBox="0 0 '+VW+' '+VH+'" role="img" aria-label="Volume de course par semaine : de 8 km en semaine 1 à 34 km en semaine 17, puis 13 km la semaine du semi.">';
+  s+='<text class="ax" x="0" y="10">km / semaine</text>';
+  [0,10,20,30,40].forEach(function(v){var y=T+ph-ph*v/max;s+='<line class="gl" x1="'+Lm+'" x2="'+(VW-Rm)+'" y1="'+y+'" y2="'+y+'"/><text class="ax" x="'+(Lm-5)+'" y="'+(y+3)+'" text-anchor="end">'+v+'</text>';});
+  s+='<g>';
+  W.forEach(function(w,i){
+    var n=i+1,cx=Lm+slot*i+slot/2,h=ph*w.km/max,y=T+ph-h;
+    var cls='bar'+(n===curN?' cur':'')+(DELOAD.indexOf(n)>=0?' hol':'')+(n>curN?' fut':'');
+    s+='<rect class="'+cls+'" x="'+(cx-bw/2).toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+h.toFixed(1)+'"><title>S'+n+' · '+w.km+' km</title></rect>';
+    s+='<text class="xl'+(n===curN?' cur':'')+'" x="'+cx.toFixed(1)+'" y="'+(VH-9)+'" text-anchor="middle">'+n+'</text>';
+    if(n===1||n===17||n===19||n===curN)s+='<text class="vl" x="'+cx.toFixed(1)+'" y="'+(y-4).toFixed(1)+'" text-anchor="middle">'+w.km+'</text>';
+  });
+  return s+'</g></svg>';
+}
+function renderWeeks(){
+  var now=nowInfo();
+  if(!openInit){openWeeks.add(now.n);openInit=true;}
+  var h='<h1 class="h2" style="font-size:34px">Les 19 semaines</h1>';
+  h+='<section class="chart"><div class="eyebrow">Volume de course, km par semaine</div>'+chartSvg(now.ph==='in'?now.n:0)
+    +'<p class="cap">Contour seul : semaines d\'allègement (S4, S8, S12, S16). S19 : 13 km, plus le semi de 21,1 km.</p></section>';
+  PHASES.forEach(function(ph){
+    h+='<div class="ph"><h2 class="h2">'+ph.name+' <span class="eyebrow">S'+ph.a+'–S'+ph.b+'</span></h2><p>'+esc(ph.d)+'</p></div>';
+    for(var n=ph.a;n<=ph.b;n++){
+      var wc=weekCount(n),isC=now.ph==='in'&&now.n===n,sd=sel||{n:now.n,dow:now.dow};
+      h+='<details class="wk'+(isC?' cur':'')+'" data-wk="'+n+'"'+(openWeeks.has(n)?' open':'')+'><summary><span class="sn">S'+n+'</span>'
+        +'<span><span class="wk-d">'+fmtRange(n)+'</span><span class="wk-k">'+W[n-1].km+' km'+(n===19?' + semi':'')+' · '+wc.d+'/'+wc.t+' séances</span></span>'
+        +(TAG[n]?'<span class="chip'+(n===17||n===19?' acc':'')+'">'+TAG[n]+'</span>':'<span></span>')+'</summary><div>';
+      for(var d=0;d<7;d++)h+=dayRow(n,d,now,sd);
+      h+='</div></details>';
+    }
+  });
+  return h;
+}
+
+function renderGuide(){
+  return '<div class="g"><h1 class="h2" style="font-size:34px">Guide</h1>'
+  +'<div class="sec-hd"><h2 class="h2">Cible</h2></div>'
+  +'<p>Objectif réaliste : finir en <b>1h50–1h55</b>. Pour garder <b>1h45</b>, il faut réussir le test du S12 : 5 km en 23\'00 ou moins, sans gêne au tibia depuis le S6.</p>'
+  +'<p>Le plan ne change pas selon le résultat. Seules les allures changent.</p>'
+  +'<div class="sec-hd"><h2 class="h2">Allures</h2></div><dl class="pace">'
+  +'<div><dt>Facile</dt><dd>Tu parles en phrases complètes · <b>6\'20–7\'15 /km</b></dd></div>'
+  +'<div><dt>Seuil</dt><dd>Soutenu mais contrôlé, 7/10 · <b>5\'20–5\'40 /km</b> jusqu\'au S12, ensuite environ 10 s/km plus vite que l\'allure semi cible</dd></div>'
+  +'<div><dt>Allure semi, sous 1h45</dt><dd>Tendu mais tenable 1 h · <b>4\'58 /km</b></dd></div>'
+  +'<div><dt>Allure semi, 1h50–1h55</dt><dd>Même ressenti · <b>5\'13–5\'27 /km</b></dd></div>'
+  +'<div><dt>Lignes droites</dt><dd>20 s vifs et relâchés, puis 40 s de trot · sans chrono</dd></div></dl>'
+  +'<div class="sec-hd"><h2 class="h2">Gérer la périostite</h2></div>'
+  +'<p>Une gêne de 0 à 2 sur 10 qui disparaît en 24 h est acceptable. À partir de 3 sur 10, tu ralentis.</p>'
+  +'<div class="rule"><b>Gêne 0–2/10, disparue en 24 h</b><span>Continuer. En cas de doute, n\'augmente pas la semaine suivante.</span></div>'
+  +'<div class="rule"><b>3/10 ou plus, ou gêne encore là le lendemain</b><span>Arrêter la séance, vélo 3 à 5 jours, reprendre à la semaine précédente.</span></div>'
+  +'<div class="rule"><b>Douleur sur un point précis du tibia, à la marche, au repos ou la nuit</b><span>Stop course et avis médical (risque de fracture de fatigue).</span></div>'
+  +'<div class="rule"><b>Deux rechutes d\'affilée</b><span>Kiné ou médecin du sport avant de reprendre.</span></div>'
+  +'<ul style="margin-top:14px"><li>Chaussures récentes avec amorti, à changer vers 600–800 km.</li><li>Tu cours surtout sur route : fais un footing facile par semaine sur chemin ou herbe.</li><li>Foulées courtes et légères, sans chercher à allonger.</li><li>Calories et protéines suffisantes (1,6–2 g/kg) : l\'os s\'adapte mal en déficit. En hiver, demande à ton médecin un dosage de vitamine D.</li></ul>'
+  +'<div class="sec-hd"><h2 class="h2">Renfo tibia / mollets</h2></div><p>Lundi et vendredi en fin de muscu (10 min), jeudi 5 min avant le footing.</p>'+itemsList(RENFO)
+  +'<div class="sec-hd"><h2 class="h2">Ajustements</h2></div><ul>'
+  +'<li><b>Date de course</b> : annoncée pour mars 2027, pas encore publiée. Le plan vise le dimanche 21 mars. Course une semaine plus tôt : supprime S10. Une semaine plus tard : répète S13.</li>'
+  +'<li><b>Séance manquée</b> : tu ne la rattrapes pas, tu passes à la suivante.</li>'
+  +'<li><b>3 à 7 jours d\'arrêt</b> : reprends à la semaine précédente. <b>Plus de 10 jours</b> : recule de 2 semaines.</li>'
+  +'<li><b>Pas de 4e sortie</b> : après une blessure, 3 sorties bien tenues valent mieux que 4. Une sortie courte pourra s\'ajouter à partir de S10 si le tibia est parfaitement silencieux.</li></ul>'
+  +backupSection()+installSection()
+  +'<div class="foot"><p>Plan du 8 novembre 2026. Date du semi : <a href="https://fr.milesrepublic.com/event/semi-marathon-de-la-metropole-du-grand-nancy-4362" target="_blank" rel="noopener">Semi-Marathon de la Métropole du Grand Nancy</a>.</p></div></div>';
+}
+
+var view=document.getElementById('view');
+function render(){
+  var ae=document.activeElement,fk=ae&&ae.dataset?ae.dataset.fk:null;
+  view.innerHTML=tab==='today'?renderToday():tab==='weeks'?renderWeeks():renderGuide();
+  var bs=document.querySelectorAll('.tabs button');
+  for(var i=0;i<bs.length;i++)bs[i].setAttribute('aria-current',bs[i].dataset.tab===tab?'page':'false');
+  if(fk){var nd=view.querySelector('[data-fk="'+fk+'"]');if(nd&&nd.focus)nd.focus({preventScroll:true});}
+}
+document.addEventListener('toggle',function(e){
+  var t=e.target;if(t&&t.dataset&&t.dataset.wk){var n=+t.dataset.wk;if(t.open)openWeeks.add(n);else openWeeks.delete(n);}
+},true);
+document.addEventListener('click',function(e){
+  var t=e.target&&e.target.closest?e.target.closest('[data-tab],[data-act]'):null;if(!t)return;
+  var d=t.dataset;
+  if(d.tab){tab=d.tab;io={mode:'',msg:'',kind:''};render();window.scrollTo(0,0);return;}
+  if(d.act==='done')change({done:{[d.id]:!state.done[d.id]}});
+  else if(d.act==='pain')change({pain:{[d.id]:state.pain[d.id]===d.v?'':d.v}});
+  else if(d.act==='entry')change({entry:!state.entry});
+  else if(d.act==='pick'){sel={n:+d.n,dow:+d.d};tab='today';render();window.scrollTo(0,0);}
+  else if(d.act==='now'){sel=null;render();window.scrollTo(0,0);}
+  else if(d.act==='bk-copy'){
+    io={mode:'export',msg:'',kind:'ok'};render();
+    copyText(backupText()).then(function(ok){
+      if(io.mode!=='export')return;
+      io.msg=ok?"Copié. Colle-le dans une note ou dans un message à toi-même.":"Copie automatique impossible : touche le texte, sélectionne tout, puis copie.";
+      io.kind=ok?'ok':'warn';render();
+    });
+  }
+  else if(d.act==='bk-open'){io={mode:'import',msg:'',kind:'ok'};render();}
+  else if(d.act==='bk-close'){io={mode:'',msg:'',kind:''};render();}
+  else if(d.act==='bk-select'){try{t.select();t.setSelectionRange(0,t.value.length);}catch(err){}}
+  else if(d.act==='bk-import'){
+    var ta=view.querySelector('#bk-ta'),r=parseBackup(ta?ta.value:'');
+    if(r.err){io.msg=r.err;io.kind='crit';render();return;}
+    state=norm(r.state);mirror();
+    io={mode:'',msg:"Sauvegarde restaurée : "+r.n+" séance"+(r.n>1?'s':'')+" cochée"+(r.n>1?'s':'')+".",kind:'ok'};render();
+  }
+});
+
+render();
+try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
+})();
+</script>
+</body>
+</html>
